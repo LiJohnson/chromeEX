@@ -1,0 +1,25 @@
+{
+	// Required
+	"manifest_version": 2,
+	"name": "image filter",
+	"version": "1.0",
+
+	"permissions": ["tabs"],
+
+	"background":{
+		"scripts":["index.js"]
+	},
+
+	"browser_action": {
+		"default_icon": {
+			"19": "m.png"			
+		},
+		"default_title": "haha"
+	},
+
+	"content_scripts":
+	[{
+		"matches":["http://lcs.com/*","http://*.com/*"],
+		"js":["jq.js","page.js"]
+	}]
+}
