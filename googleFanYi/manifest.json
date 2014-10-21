@@ -13,7 +13,7 @@
 	 },
 	"content_scripts": [{
 	    "matches": ["http://*/*", "https://*/*"],
-	    "js": ["font_FanYi.js"]
+	    "js": ["front_FanYi.js"]
 	  }],
 	"background":{
 		"scripts": ["background_FanYi.js"]
