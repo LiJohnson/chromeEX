@@ -1,0 +1,15 @@
+{
+	"manifest_version": 2,
+	"name": "DNS proxy",
+	"version": "1.0",
+	"browser_action": {},
+	"permissions": ["proxy", "webRequest","webRequestBlocking","<all_urls>"],
+
+	"content_scripts": [{
+		"matches": ["http://*/*", "https://*/*"],
+		"js": ["proxy.js"]
+	}],
+	"background":{
+		"scripts": ["background.js"]
+	}
+}
