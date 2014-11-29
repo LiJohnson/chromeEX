@@ -36,21 +36,8 @@ var MyProxy = function(){
 	this.getIpInfo = function(ip,cb){
 		if( typeof ip == 'function' )cb=ip , ip='';
 
-		var listener = function(details) {
-			if( details.url.indexOf("shit") != -1 ){
-				details.requestHeaders = [];
-			}
-			return {requestHeaders:details.requestHeaders};
-		};
-
-		chrome.webRequest.onBeforeSendHeaders.addListener( listener, {
-				urls: ["*://ipinfo.io/","http://ipinfo.io/","*://ipinfo.io/*","http://lcs.com/*"]
-			},["blocking", "requestHeaders"]
-		);
-
-		$.get("http://ipinfo.io",{shit:'shit'}, cb ,'json').always(function(){
-			chrome.webRequest.onBeforeSendHeaders.removeListener(listener);
-		});
+		ip && (ip = "/"+ip); 
+		$.get("http://ipinfo.io"+ ip + "/json" , cb, "json" );
 
 	};
 }
