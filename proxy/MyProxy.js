@@ -9,7 +9,7 @@ var MyProxy = function(){
 		}
 	};
 
-	this.set = function(host , port){
+	this.setd = function(host , port){
 		config.rules.singleProxy.host = host;
 		config.rules.singleProxy.port = port;
 
