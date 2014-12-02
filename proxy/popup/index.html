@@ -3,14 +3,17 @@
 <head>
 	<meta charset="UTF-8">
 	<title>proxy</title>
-	<script src="../jquery.js" ></script>
-	<script src="../MyProxy.js" ></script>
+	<script src="../js/jquery.js" ></script>
+	<script src="../js/MyProxy.js" ></script>
 	<script src="index.js" ></script>
-	<link rel="stylesheet" href="http://lipis.github.io/flag-icon-css/css/flag-icon.min.css">
+	<link rel="stylesheet" href="../css/flag-icon.css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<!--
 	<link rel="stylesheet" href="http://fontawesome.io/assets/font-awesome/css/font-awesome.min.css">
+-->
 	<style>
 		body{
-			width:200px;
+			width:220px;
 		}
 		iframe{
 			border: none;
@@ -29,18 +32,43 @@
 		.loading *{
 			font-size: 10em;
 		}
-		.fa-map-marker{
+		.gyphicon-map-marker{
 			font-size: 20px;
+		}
+
+		.fa-spin {
+		  -webkit-animation: fa-spin 2s infinite linear;
+		  animation: fa-spin 2s infinite linear;
+		}
+		@-webkit-keyframes fa-spin {
+		  0% {
+		    -webkit-transform: rotate(0deg);
+		    transform: rotate(0deg);
+		  }
+		  100% {
+		    -webkit-transform: rotate(359deg);
+		    transform: rotate(359deg);
+		  }
+		}
+		@keyframes fa-spin {
+		  0% {
+		    -webkit-transform: rotate(0deg);
+		    transform: rotate(0deg);
+		  }
+		  100% {
+		    -webkit-transform: rotate(359deg);
+		    transform: rotate(359deg);
+		  }
 		}
 
 	</style>
 </head>
 <body >
-	<p class="loading"><i class="fa fa-circle-o-notch fa-6 fa-spin"></i></p>
+	<p class="loading"><i class="glyphicon glyphicon-refresh fa-spin"></i></p>
 	<p class="ip" ></p>
 	<p>
 		<span class="city"></span>
-		<a class="map hide" ><i class="fa fa-map-marker"></i></a>
+		<a class="map hide" ><i class="glyphicon glyphicon-map-marker"></i></a>
 	</p>
 	<p><span class="flag" ></span></p>
 	<iframe class="hide" />

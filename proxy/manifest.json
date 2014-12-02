@@ -17,9 +17,9 @@
 
 	"content_scripts": [{
 		"matches": ["http://*/*", "https://*/*"],
-		"js": ["proxy.js"]
+		"js": ["js/proxy.js"]
 	}],
 	"background":{
-		"scripts": ["jquery.js","MyProxy.js","background.js"]
+		"scripts": ["js/jquery.js","js/MyProxy.js","js/background.js"]
 	}
 }
