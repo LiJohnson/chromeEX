@@ -15,6 +15,8 @@ chrome.browserAction.onClicked.addListener(function(e) {
 });
 */
 
+var ips = {};
+var a = document.createElement("a");
 
 chrome.webRequest.onBeforeSendHeaders.addListener( function(details) {
 	details.requestHeaders.push({name:'referer',value:'https://www.google.com.hk/'});
@@ -23,3 +25,21 @@ chrome.webRequest.onBeforeSendHeaders.addListener( function(details) {
 		urls: ["https://www.google.com.hk/maps*"]
 	},["blocking", "requestHeaders"]
 );
+
+chrome.webRequest.onResponseStarted.addListener(function(data){
+	a.href = data.url;
+	ips[a.host] = data.ip;
+},{
+	urls: ["<all_urls>"],
+	types:["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest",  "other"]
+});
+
+chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
+	if( msg.getIp ){
+		chrome.tabs.getSelected(function(tab){
+			a.href = tab.url;
+			sendResponse(ips[a.host]);
+		});
+	}
+	return true;
+});	
