@@ -1,6 +1,6 @@
 $(function(){
 	var p = new MyProxy();
-	var googleMap = "https://www.google.com.hk/maps/search/"
+	var googleMap = "https://www.google.com.hk/maps/place/"
 	p.getIpInfo(function(data){
 		var map = googleMap + data.loc;
 		$(".ip").html(data.ip);
