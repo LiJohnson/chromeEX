@@ -38,6 +38,6 @@ $(gg=function(){
 			path.push(loc);
 		}
 		
-		$(".path a").prop('href', googleMap.replace('place','dir')+path.join('/'));
+		$(".path a").prop('href', googleMap.replace('place','dir')+path.join('/	'));
 	};
 });
