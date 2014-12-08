@@ -1,14 +1,18 @@
 $(gg=function(){
 	var p = new MyProxy();
 	var googleMap = "https://www.google.com.hk/maps/place/"
+	var path = [];
+
 	p.getIpInfo(function(data){
 		setData($(".from"),data);
 		debugger
 		$(".loading").addClass('hide');
 	});
 
-	$(".map").click(function() {
-		chrome.tabs.create({url:this.href,selected:false});
+	$("a").click(function() {
+		if(this.href && this.href.match(/^http/i)){
+			chrome.tabs.create({url:this.href,selected:false});
+		}
 	});
 
 	chrome.extension.sendMessage({getIp: true},function(ip){
@@ -26,5 +30,14 @@ $(gg=function(){
 		$html.find(".map").removeClass('hide').prop("href" ,  map );
 		//$html.find("iframe").prop('src', map);
 		
+		updatePath(data.loc);
+		
+	};
+	var updatePath = function(loc){
+		if( path.indexOf(loc) == -1 ){
+			path.push(loc);
+		}
+		
+		$(".path a").prop('href', googleMap.replace('place','dir')+path.join('/'));
 	};
 });

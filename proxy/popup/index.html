@@ -27,6 +27,7 @@
 			display: none;
 		}
 		.loading{
+			padding-top: 10px;
 			text-align: center;
 		}
 		.loading *{
@@ -34,6 +35,13 @@
 		}
 		.gyphicon-map-marker{
 			font-size: 20px;
+		}
+		.path{
+			text-align: center;
+		}
+		.glyphicon-sort{
+			font-size: 20px;
+			transform: rotate(90deg);
 		}
 
 		.fa-spin {
@@ -68,7 +76,7 @@
 	
 	<div class="from">
 		<p class="ip" ></p>
-		<p>
+		<p >
 			<span class="city"></span>
 			<a class="map hide" ><i class="glyphicon glyphicon-map-marker"></i></a>
 		</p>
@@ -77,6 +85,10 @@
 		</p>
 	</div>
 
+	<hr>
+	<div class="path" >
+		<a><i class="glyphicon glyphicon-sort" ></i></a>
+	</div>
 	<hr>
 	
 	<div class="to">
