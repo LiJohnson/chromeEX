@@ -9,7 +9,7 @@ var MyProxy = function(){
 		}
 	};
 
-	this.setd = function(host , port){
+	this.setd = this.set = function(host , port , cb){
 		config.rules.singleProxy.host = host;
 		config.rules.singleProxy.port = port;
 
@@ -19,16 +19,19 @@ var MyProxy = function(){
 			},
 			function(e) {
 				console.log("proxy setted", e);
+				cb && cb.call(this,e);
 			}
 		);
 	};
 
-	this.direct = function(){
+	this.direct = function(cb){
 		chrome.proxy.settings.set({
 				value: {mode:'direct'}
 			},
 			function(e) {
 				console.log("never use proxy ", e);
+				cb && cb.call(this,e);
+
 			}
 		);
 	};
