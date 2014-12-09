@@ -135,13 +135,14 @@ $(gg=function(){
 		});
 
 		$html.on("change","textarea",function(){
-			var host = this.value.trim().split("\n");
+			var host = this.value.trim().split(/\n|\s/);
 			hostList(host);
 			this.value = "";
 		}).on("change","input[name=host-item]",function(){
 			updateProxy();
 		}).on("click",".close",function(){
 			$(this).parents("li:eq(0)").remove();
+			saveHost();
 			updateProxy();
 		});
 
