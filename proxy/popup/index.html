@@ -29,9 +29,14 @@
 		.loading{
 			padding-top: 10px;
 			text-align: center;
+			position: fixed;
+			right:0;top:0;left: 0;bottom: 0;
+			background: rgba(98, 98, 98, 0.37);
+			z-index: 5555555555;
 		}
 		.loading *{
 			font-size: 10em;
+			margin-top: 50%;
 		}
 		.gyphicon-map-marker{
 			font-size: 20px;
@@ -42,6 +47,13 @@
 		.glyphicon-sort{
 			font-size: 20px;
 			transform: rotate(90deg);
+		}
+		.list li{
+			display:inline-block;
+			width:100%;
+		}
+		.list li span{
+			float: right;
 		}
 
 		.fa-spin {
@@ -106,10 +118,13 @@
 		<label>
 			<input type="checkbox" name="proxy" />proxy
 		</label>
-		<a class="btn btn-default">update</a>
 		<div>
-			<input type="text" name="proxy-host" class="form-control"/>
+			<textarea type="text" name="host" class="form-control" ></textarea>
 		</div>
+		<div class="row">
+			<ul class="list col-md-12" >
+			</ul>
+		</di>
 	</div>
 
 </body>

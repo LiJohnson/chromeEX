@@ -11,7 +11,7 @@ var MyProxy = function(){
 
 	this.setd = this.set = function(host , port , cb){
 		config.rules.singleProxy.host = host;
-		config.rules.singleProxy.port = port;
+		config.rules.singleProxy.port = port*1;
 
 		chrome.proxy.settings.set({
 				value: config,
@@ -23,6 +23,12 @@ var MyProxy = function(){
 			}
 		);
 	};
+
+	this.get = function(cb){
+		chrome.proxy.settings.get({},function(data){
+			cb && cb.call(this,data.value.rules.singleProxy);
+		});
+	}
 
 	this.direct = function(cb){
 		chrome.proxy.settings.set({

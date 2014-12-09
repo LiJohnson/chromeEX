@@ -51,15 +51,15 @@ $(gg=function(){
 	var googleMap = "https://www.google.com.hk/maps/place/"
 	var path = [];
 
-	p.getIpInfo(function(data){
-		setData($(".from"),data);
-		$(".loading").addClass('hide');
-	});
 
 	$("a").click(function() {
 		if(this.href && this.href.match(/^http/i)){
 			chrome.tabs.create({url:this.href,selected:false});
 		}
+	});
+
+	$(".loading").dblclick(function() {
+		$(this).addClass('hide');
 	});
 
 	chrome.extension.sendMessage({getIp: true},function(ip){
@@ -68,12 +68,19 @@ $(gg=function(){
 		});
 	});
 
+	var updateIpInfo = function(){
+		$(".loading").removeClass('hide');
+		p.getIpInfo(function(data){
+			setData($(".from"),data);
+			$(".loading").addClass('hide');
+		});
+	}
 	var setData = function($html,data){
 		//data = data || {country:""}
 		var map = googleMap + data.loc;
 		$html.find(".ip").html(data.ip);
 		$html.find(".city").html([data.city,data.region,data.country].join(" . "));
-		$html.find(".flag").addClass("flag-icon flag-icon-"+data.country.toLowerCase());
+		$html.find(".flag").prop('class',"flag flag-icon flag-icon-"+data.country.toLowerCase());
 		$html.find(".map").removeClass('hide').prop("href" ,  map );
 		//$html.find("iframe").prop('src', map);
 		
@@ -87,37 +94,65 @@ $(gg=function(){
 		
 		$(".path a").prop('href', googleMap.replace('place','dir')+path.join('/	'));
 	};
+	updateIpInfo();
 
 	(function($html){
 		var stor = new Storage("proxy");
 		var myProxy = new MyProxy();
 		
 		var updateProxy = function(){
-			if( stor.get("proxy") ){
-				var host = stor.get("proxy-host").split(":");
-				myProxy.set(host[0],host[1]*1);
+			var host = $html.find("input[name=host-item]:checked").val();
+			if( host && stor.get("proxy") ){
+				host = host.split(":");
+				myProxy.set(host[0],host[1]*1||(void 0),updateIpInfo);
 			}else{
-				myProxy.direct();
+				myProxy.direct(updateIpInfo);
+				$html.find("input[name=host-item]").prop("checked",false);
 			}
 		};
 
-		$html.find('input[name=proxy]').prop("checked",stor.get("proxy"));
-		$html.find('input[name=proxy-host]').val(stor.get("proxy-host"));
+		var hostList = function(list){
+			var $list = $html.find(".list");
+			$.each(list||[],function(index, el) {
+				$list.append("<li >" + el +  "<span ><input type=radio name=host-item value='"+el+"' /><a class=close >&times;</a></span></li>");
+			});
+			saveHost();
+		};
 
-		$html.on("change","input",function(){
-			var val = this.value ;
-			if(this.type == 'checkbox'){
-				val = this.checked;
-			}
-			stor.set(this.name,val);
+		var saveHost = function(){
+			var host = [];
+			$html.find('input[name=host-item]').each(function() {
+				host.push(this.value);
+			});
+			stor.set('host',host);
+		}
+
+		$html.find('input[name=proxy]').prop("checked",stor.get("proxy"));
+
+		$html.on("change","input[name=proxy]",function(){
+			stor.set(this.name,this.checked);
 			updateProxy();	
 		});
 
-		$html.find(".btn").click(function(event) {
+		$html.on("change","textarea",function(){
+			var host = this.value.trim().split("\n");
+			hostList(host);
+			this.value = "";
+		}).on("change","input[name=host-item]",function(){
+			updateProxy();
+		}).on("click",".close",function(){
+			$(this).parents("li:eq(0)").remove();
 			updateProxy();
 		});
 
-		updateProxy();
+
+		hostList(stor.get("host"));
+		myProxy.get(function(data){
+			console.log(data);
+			$html.find("input[name=host-item]").each(function() {
+				this.checked = !!this.value.match(data.host+":"+data.port);
+			});
+		});
 
 	})($(".proxy"));
 });
