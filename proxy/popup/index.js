@@ -144,6 +144,10 @@ $(gg=function(){
 			$(this).parents("li:eq(0)").remove();
 			saveHost();
 			updateProxy();
+		}).on("click",".clear",function(){
+			$html.find(".list li").remove();
+			saveHost();
+			updateProxy();
 		});
 
 

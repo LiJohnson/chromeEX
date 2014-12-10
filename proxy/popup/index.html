@@ -55,6 +55,12 @@
 		.list li span{
 			float: right;
 		}
+		.proxy label , .proxy input[type=radio]{
+			cursor: pointer;
+		}
+		.proxy .clear{
+			float:right;
+		}
 
 		.fa-spin {
 		  -webkit-animation: fa-spin 2s infinite linear;
@@ -115,9 +121,12 @@
 	</div>
 
 	<div class="proxy">
-		<label>
-			<input type="checkbox" name="proxy" />proxy
-		</label>
+		<div>
+			<label>
+				<input type="checkbox" name="proxy" />proxy
+			</label>
+			<a class="btn btn-default btn-xs clear">clear</a>
+		</div>
 		<div>
 			<textarea type="text" name="host" class="form-control" ></textarea>
 		</div>
