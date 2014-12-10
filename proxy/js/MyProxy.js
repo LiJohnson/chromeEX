@@ -5,7 +5,7 @@ var MyProxy = function(){
 			singleProxy: {
 				scheme: "http",
 			},
-			bypassList: []
+			bypassList: "localhost; 127.0.0.1; *.bootstrapcdn.com;*.sinaapp.com;*.weibo.com;*.lcs.io".split(';')
 		}
 	};
 
