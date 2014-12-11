@@ -5,14 +5,25 @@ var MyProxy = function(){
 			singleProxy: {
 				scheme: "http",
 			},
-			bypassList: "localhost; 127.0.0.1; *.bootstrapcdn.com;*.sinaapp.com;*.weibo.com;*.lcs.io".split(';')
+			bypassList: []
 		}
 	};
+	var $this = this;
 
-	this.setd = this.set = function(host , port , cb){
-		config.rules.singleProxy.host = host;
-		config.rules.singleProxy.port = port*1;
-
+	this.set = function(host , port , cb){
+		var opt = host;
+		if( typeof host != 'object' ){
+			opt = {
+				host:host,
+				port:port*1
+			};
+		}else{
+			cb = port;
+		}
+		for( var name in opt ){
+			config.rules.singleProxy[name] = opt[name];
+		}
+		config.rules.bypassList = (localStorage.bypassList||"").split(/[;,]/);
 		chrome.proxy.settings.set({
 				value: config,
 				scope: 'regular'
@@ -26,9 +37,17 @@ var MyProxy = function(){
 
 	this.get = function(cb){
 		chrome.proxy.settings.get({},function(data){
-			cb && cb.call(this,data.value.rules.singleProxy);
+			cb && cb.call(this,data.value);
 		});
-	}
+	};
+
+	this.setBypassList = function(bypassList,cb){
+		config.rules.bypassList = bypassList;
+		this.get(function(data){
+			if( data.mode == 'direct' ) return cb && cb.call(this,dara);
+			$this.set(data.rules.singleProxy,cb);
+		});
+	};
 
 	this.direct = function(cb){
 		chrome.proxy.settings.set({

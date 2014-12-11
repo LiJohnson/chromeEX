@@ -13,6 +13,7 @@
 		"128": "img/icon/icon-120.png",
 		"152": "img/icon/icon-152.png"
 	},
+	"options_page":"option.html",
 	"permissions": ["proxy", "tabs","cookies","webRequest","webRequestBlocking","<all_urls>"],
 
 	"content_scripts": [{
